@@ -1,0 +1,5 @@
+links:
+
+http://www.returnandrisk.com/2015/01/fomc-dates-full-history-web-scrape.html
+https://stanford.edu/~rezab/papers/finlp_slides.pdf
+https://nycdatascience.com/blog/student-works/rate-hiking-not-investigating-one-model-predict-fomc-decision-interest-rate/
