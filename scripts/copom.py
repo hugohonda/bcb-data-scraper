@@ -80,5 +80,5 @@ output_dir = '../output'
 
 if not os.path.isdir(output_dir):
   os.mkdir(output_dir)
-with open(f'../output/{initial}-{final}-copom-records.json', 'w') as file:
+with open(f'{output_dir}/{initial}-{final}-copom-records.json', 'w') as file:
   json.dump(records, file)
