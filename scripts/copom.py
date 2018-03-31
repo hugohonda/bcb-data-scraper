@@ -3,6 +3,7 @@ import json
 import re
 import requests
 from bs4 import BeautifulSoup
+from bs4 import Comment
 from io import BytesIO
 from PyPDF2 import PdfFileReader
 
@@ -16,10 +17,26 @@ def get_html_content_0_96 (url):
 def get_html_content_97_199 (url):
   page = requests.get(url)
   soup = BeautifulSoup(page.text, 'html.parser')
-  divs = soup.find_all('div', class_='lista1')
+  comments = soup.find_all(string=lambda text:isinstance(text,Comment))
   text = ''
-  for div in divs:
-    text = text + ' ' + div.text
+  for comment in comments:
+    if comment == 'conteudo':
+      contents = comment.find_all_next(text=True)
+      for content in contents:
+        text = text + ' ' + content
+  print(url)
+  return text
+
+def get_html_content (url):
+  page = requests.get(url)
+  soup = BeautifulSoup(page.text, 'html.parser')
+  comments = soup.find_all(string=lambda text:isinstance(text,Comment))
+  text = ''
+  for comment in comments:
+    if comment == 'conteudo':
+      contents = comment.find_all_next(text=True)
+      for content in contents:
+        text = text + ' ' + content
   print(url)
   return text
 
@@ -54,15 +71,12 @@ def get_records (initial_year, final_year):
           'count': int(match.group(3)),
           'pub-date': match.group(4)
         }
-        if obj['count'] <= 96:
-          content_raw = get_html_content_0_96(obj['link'])
-          content_type  = 1
-        if obj['count'] >= 97 and obj['count'] <= 199:
-          content_raw = get_html_content_97_199(obj['link'])
-          content_type  = 2
+        if obj['count'] <= 199:
+          content_raw = get_html_content(obj['link'])
+          content_type  = 0
         if obj['count'] >= 200:
           content_raw = get_pdf_content(obj['link'])
-          content_type  = 3
+          content_type  = 1
         obj['content'] = {
           'raw': content_raw,
           'type': content_type
