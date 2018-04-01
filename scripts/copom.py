@@ -7,25 +7,7 @@ from bs4 import Comment
 from io import BytesIO
 from PyPDF2 import PdfFileReader
 
-def get_html_content_0_96 (url):
-  page = requests.get(url)
-  soup = BeautifulSoup(page.text, 'html.parser')
-  full_content = soup.find('div', {'class': 'conteudo'})
-  print(url)
-  return full_content.text
-
-def get_html_content_97_199 (url):
-  page = requests.get(url)
-  soup = BeautifulSoup(page.text, 'html.parser')
-  comments = soup.find_all(string=lambda text:isinstance(text,Comment))
-  text = ''
-  for comment in comments:
-    if comment == 'conteudo':
-      contents = comment.find_all_next(text=True)
-      for content in contents:
-        text = text + ' ' + content
-  print(url)
-  return text
+month_dict = {'Janeiro': 1, 'Fevereiro': 2, 'Março': 3, 'Abril': 4, 'Maio': 5, 'Junho': 6, 'Julho': 7, 'Agosto': 8, 'Setembro': 9, 'Outubro': 10, 'Novembro': 11, 'Dezembro': 12}
 
 def get_html_content (url):
   page = requests.get(url)
@@ -65,23 +47,17 @@ def get_records (initial_year, final_year):
         link_details = month.text.strip()
         match = re.search(r'(\w+)\/(\d+)\s+-\s+(\d+).[\s\S]*?(\d{2}\/\d{2}\/\d{4})', link_details)
         obj = {
+          'id': int(match.group(3)),
           'link': f'https://www.bcb.gov.br{link_href}',
-          'month': match.group(1),
+          'month': month_dict[match.group(1)],
           'year': int(match.group(2)),
-          'count': int(match.group(3)),
           'pub-date': match.group(4)
         }
-        if obj['count'] <= 199:
+        if obj['id'] <= 199:
           content_raw = get_html_content(obj['link'])
-          content_type  = 0
-        if obj['count'] >= 200:
+        else:
           content_raw = get_pdf_content(obj['link'])
-          content_type  = 1
-        obj['content'] = {
-          'raw': content_raw,
-          'type': content_type
-        }
-        obj['id'] = 'COPOM' + str(obj['count'])
+        obj['raw'] =  content_raw
         records.append(obj)
       except Exception as error:
         print(f'erro: {error}')

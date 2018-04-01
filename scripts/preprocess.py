@@ -57,36 +57,35 @@ def get_participants_200 (text):
   }
   return participants
 
-# topics extractor < 200
+# topics extractor 90 < x < 200
 summary_pattern = r'[Ss]um.rio\s+([\s\S]*?)\s+[Dd]ata:?'
 all_topics = set()
 
-def get_topics (text):
-  text = re.sub(r'A\s*?valiação\s+?prospectiva\s+?das\s+?tendências\s+?d.\s+?inflação', 'Avaliação prospectiva das tendências de inflação', text, flags=re.I)
-  text = re.sub(r'A\s*?mbiente\s+externo', 'Ambiente externo', text, flags=re.I)
-  text = re.sub(r'E\s*?volução\s+?recente\s+?da\s+?(?:economia|atividade\s+economica)', 'Evolucao do mercado de cambio', text, flags=re.I)
-  text = re.sub(r'E\s*?volução\s+?recente\s+?da\s+?inflação', 'Evolução recente da inflação', text, flags=re.I)
-  text = re.sub(r'E\s*?conomia\s+mundial', 'Economia mundial', text, flags=re.I)
-  text = re.sub(r'I\s*?mplementação\s+?d.\s+?política\s+?monetária', 'Implementação de política monetária', text, flags=re.I)
-  text = re.sub(r'M\s*?e\s*?rcado\s+?monetário\s+?e\s+?operações\s+?de\s+?mercado\s+?aberto', 'Mercado monetário e operações de mercado aberto', text, flags=re.I)
-  text = re.sub(r'C\s*?omércio\s+?exterior\s+?e\s+?reservas\s+?internacionais', 'Comércio exterior', text, flags=re.I)
-  text = re.sub(r'C\s*?omércio\s+?exterior\s+?e\s+?itens\s+?do\s+?balanço\s+?de\s+?pagamentos', 'Comércio exterior', text, flags=re.I)
-  text = re.sub(r'C\s*?omércio\s+?exterior\s+?e\s+?balanço\s+?de\s+?pagamentos', 'Comércio exterior', text, flags=re.I)
-  text = re.sub(r'C\s*?omércio\s+?exterior\s+?e\s+?alguns\s+?resultados\s+?do\s+?balanço\s+?de\s+?pagamentos', 'Comércio exterior', text, flags=re.I)
-  text = re.sub(r'A\s*?tividade\s+?econômica', 'Atividade econômica', text, flags=re.I)
-  text = re.sub(r'M\s*?ercado\s+de\s+trabalho', 'Mercado de trabalho', text, flags=re.I)
-  text = re.sub(r'E\s*?xpectativas\s+e\s+sondagens', 'Expectativas e sondagens', text, flags=re.I)
-  text = re.sub(r'C\s*?rédito\s+e\s+inadimplência', 'Crédito', text, flags=re.I)
-  text = re.sub(r'D\s*?iretrizes\s+d.\s+Política\s+Monetária', 'Diretrizes de política monetária', text, flags=re.I)
-  text = re.sub(r'S\s*?etor\s+externo', 'Setor externo', text, flags=re.I)
-  text = re.sub(r'I\s*?nflação', 'Inflação', text)
-  text = re.sub(r'B\s*?alanço\s+de\s+Pagamentos', 'Balanço de pagamentos', text)
-  text = re.sub(r'P\s*?reçose\s+Nível\s+de\s+Atividade', 'Preços e Nível de Atividade', text)
+def get_topics (text, copom_id):
+  text = re.sub(r'A\s*?valia..o\s+?[Pp]rospectiva\s+?[Dd]as\s+?[Tt]end.ncias\s+?d.\s+?[Ii]nfla..o', 'Avaliacao prospectiva das tendencias de inflacao', text)
+  text = re.sub(r'A\s*?mbiente\s+[Ee]xterno', 'Ambiente externo', text)
+  text = re.sub(r'E\s*?volu..o\s+?[Rr]ecente\s+?[Dd]a\s+?(?:[Ee]conomia|[Aa]tividade\s+[Ee]conomica)', 'Evolucao do mercado de cambio', text)
+  text = re.sub(r'E\s*?volu..o\s+?[Rr]ecente\s+?[Dd]a\s+?[Ii]nfla..o', 'Evolucao recente da inflacao', text)
+  text = re.sub(r'E\s*?conomia\s+[Mm]undial', 'Economia mundial', text)
+  text = re.sub(r'I\s*?mplementa..o\s+?d.\s+?[Pp]ol.tica\s+?[Mm]onet.ria', 'Implementação de politica monetaria', text)
+  text = re.sub(r'M\s*?e\s*?rcado\s+?[Mm]onet.rio\s+?e\s+?[Oo]pera..es\s+?[Dd]e\s+?[Mm]ercado\s+?[Aa]berto', 'Mercado monetario e operacoes de mercado aberto', text)
+  text = re.sub(r'C\s*?om.rcio\s+?[Ee]xterior\s+?e\s+?(?:[Rr]eservas\s+?[Ii]nternacionais|[Ii]tens\s+?[Dd]o\s+?[Bb]alan.o\s+?de\s+?[Pp]agamentos|[Bb]alan.o\s+?[Dd]e\s+?[Pp]agamentos|[Aa]lguns\s+?[Rr]esultados\s+?[Dd]o\s+?[Bb]alan.o\s+?[Dd]e\s+?[Pp]agamentos)', 'Comercio exterior', text)
+  text = re.sub(r'A\s*?tividade\s+?[Ee]con.mica', 'Atividade economica', text)
+  text = re.sub(r'M\s*?ercado\s+de\s+[Tt]rabalho', 'Mercado de trabalho', text)
+  text = re.sub(r'E\s*?xpectativas\s+e\s+[Ss]ondagens', 'Expectativas e sondagens', text)
+  text = re.sub(r'C\s*?rédito\s+e\s+[Ii]nadimpl.ncia', 'Credito', text)
+  text = re.sub(r'D\s*?iretrizes\s+d.\s+[Pp]ol.tica\s+[Mm]onet.ria', 'Diretrizes de politica monetaria', text)
+  text = re.sub(r'S\s*?etor\s+[Ee]xterno', 'Setor externo', text)
+  text = re.sub(r'I\s*?nfla..o', 'Inflacao', text)
+  text = re.sub(r'P\s*?re.os', 'Precos', text)
+  text = re.sub(r'B\s*?alan.o\s+de\s+[Pp]agamentos', 'Balanco de pagamentos', text)
+  text = re.sub(r'P\s*?reçose\s+[Nn].vel\s+de\s+[Aa]tividade', 'Precos e Nivel de Atividade', text)
   summary = re.search(summary_pattern, text).group(1)
   summary = re.sub('\r', '', summary)
   summary = re.sub(r'\n+', r'\n', summary)
   summary = summary.split(' \n ')
   summary = [x.replace('\n',' ').strip() for x in summary]
+  summary = list(filter(None, summary))
   l = len(summary)
   topics = []
   for idx, curr_topic in enumerate(summary):
@@ -94,9 +93,9 @@ def get_topics (text):
     content_pattern = None
     if idx < (l - 1):
       next_topic = summary[idx + 1]
-      content_pattern = re.compile(f'{curr_topic}[\s\S]*?{curr_topic}\s+([\s\S]*?)\s+{next_topic}')
+      content_pattern = re.compile(f'{curr_topic}[\s\S]+?{curr_topic}([\s\S]+?){next_topic}')
     else:
-      content_pattern = re.compile(f'{curr_topic}[\s\S]*?{curr_topic}\s+([\s\S]*?)\s+Atendimento: 145')
+      content_pattern = re.compile(f'{curr_topic}[\s\S]+?{curr_topic}([\s\S]+?)Atendimento: 145')
     if content_pattern != None:
       try:
         result = re.search(content_pattern, text).group(1)
@@ -105,18 +104,20 @@ def get_topics (text):
         curr_topic = re.sub(r'\s+', ' ', curr_topic).capitalize()
         topic = {
           'title': curr_topic,
-          'content': tokenize(result)
+          'content': result,
+          'copom_id': copom_id
         }
-        all_topics.add(curr_topic)
       except Exception as err:
         print('error message: ', err)
         pass
-    topics.append(topic)
+      if curr_topic != '':
+        all_topics.add(curr_topic)
+        topics.append(topic)
   return topics
 
 # topics extractor >= 200
 
-def get_topics_200 (text):
+def get_topics_200 (text, copom_id):
   summary = re.findall(r'\s+[A-Z]\)\s+?([\s\S]*?)\s+?\d+\.', text, flags=re.M)
   l = len(summary)
   topics = []
@@ -142,7 +143,8 @@ def get_topics_200 (text):
         curr_topic = re.sub(r'\s+', ' ', curr_topic).capitalize()
         topic = {
           'title': curr_topic,
-          'content': tokenize(result)
+          'content': result,
+          'copom_id': copom_id
         }
         all_topics.add(curr_topic)
       except Exception as err:
@@ -160,25 +162,26 @@ full_text = ''
 err_participants = []
 err_topics = []
 
-for content in data:
-  print(content['count'])
-  text = content['content']['raw']
+for record in data:
+  copom_id = record['id']
+  print(copom_id)
+  text = record['raw']
   full_text = full_text + text
   try:
-    if content['count'] < 200:
-      content['topics'] = get_topics(text)
+    if record['id'] < 200:
+      record['topics'] = get_topics(text, copom_id)
     else:
-      content['topics'] = get_topics_200(text)
+      record['topics'] = get_topics_200(text, copom_id)
   except Exception:
-    err_topics.append(content['count'])
+    err_topics.append(record['id'])
     pass
   try:
-    if content['count'] < 200:
-      content['participants'] = get_participants(text)
+    if record['id'] < 200:
+      record['participants'] = get_participants(text)
     else:
-      content['participants'] = get_participants_200(text)
+      record['participants'] = get_participants_200(text)
   except Exception:
-    err_participants.append(content['count'])
+    err_participants.append(record['id'])
     pass
 
 print(err_topics)

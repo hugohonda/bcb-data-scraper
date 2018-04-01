@@ -1,0 +1,98 @@
+2018-04-01T11:11:22.604196000 0.193469s notice: Recursively removing directory /Users/hugohonda/Developer/bcb-data-scraper/rethinkdb_data/tmp
+2018-04-01T11:11:22.607112000 0.196391s notice: Initializing directory /Users/hugohonda/Developer/bcb-data-scraper/rethinkdb_data
+2018-04-01T11:11:22.607300000 0.196571s info: Creating a default database for your convenience. (This is because you ran 'rethinkdb' without 'create', 'serve', or '--join', and the directory '/Users/hugohonda/Developer/bcb-data-scraper/rethinkdb_data' did not already exist or is empty.)
+2018-04-01T11:11:22.607378000 0.196649s notice: Running rethinkdb 2.3.6 (CLANG 9.0.0 (clang-900.0.37))...
+2018-04-01T11:11:22.613646000 0.202918s notice: Running on Darwin 17.4.0 x86_64
+2018-04-01T11:11:22.613705000 0.202977s notice: Loading data from directory /Users/hugohonda/Developer/bcb-data-scraper/rethinkdb_data
+2018-04-01T11:11:22.691419000 0.280691s info: Automatically using cache size of 100 MB
+2018-04-01T11:11:22.691431000 0.280702s warn: Cache size is very low and may impact performance.
+2018-04-01T11:11:22.693218000 0.282490s notice: Listening for intracluster connections on port 29015
+2018-04-01T11:11:22.695664000 0.284936s notice: Listening for client driver connections on port 28015
+2018-04-01T11:11:22.695840000 0.285111s notice: Listening for administrative HTTP connections on port 8080
+2018-04-01T11:11:22.695841000 0.285113s notice: Listening on cluster addresses: 127.0.0.1, ::1
+2018-04-01T11:11:22.695847000 0.285118s notice: Listening on driver addresses: 127.0.0.1, ::1
+2018-04-01T11:11:22.695851000 0.285122s notice: Listening on http addresses: 127.0.0.1, ::1
+2018-04-01T11:11:22.695858000 0.285130s notice: To fully expose RethinkDB on the network, bind to all addresses by running rethinkdb with the `--bind all` command line option.
+2018-04-01T11:11:22.695866000 0.285137s notice: Server ready, "HugoHonda_local_o33" e6765282-d535-44fb-9f63-c7310e3224f9
+2018-04-01T11:11:40.025777000 17.615087s info: Table 1e8215ed-ab8f-4865-b3c7-9a7d03f84799: Starting a new Raft election for term 1.
+2018-04-01T11:11:40.026797000 17.616106s info: Table 1e8215ed-ab8f-4865-b3c7-9a7d03f84799: Added replica on this server.
+2018-04-01T11:11:40.035440000 17.624749s info: Table 1e8215ed-ab8f-4865-b3c7-9a7d03f84799: This server is Raft leader for term 1. Latest log index is 0.
+2018-04-01T11:13:47.238936000 144.828190s info: Table a675bcca-385e-482e-9832-9e36500f9cbc: Starting a new Raft election for term 1.
+2018-04-01T11:13:47.239098000 144.828352s info: Table a675bcca-385e-482e-9832-9e36500f9cbc: Added replica on this server.
+2018-04-01T11:13:47.252805000 144.842059s info: Table a675bcca-385e-482e-9832-9e36500f9cbc: This server is Raft leader for term 1. Latest log index is 0.
+2018-04-01T11:26:38.903075000 916.491854s notice: Removing file /Users/hugohonda/Developer/bcb-data-scraper/rethinkdb_data/1e8215ed-ab8f-4865-b3c7-9a7d03f84799
+2018-04-01T11:26:38.903086000 916.491864s info: Table 1e8215ed-ab8f-4865-b3c7-9a7d03f84799: Deleted the table.
+2018-04-01T11:26:38.931905000 916.520683s notice: Removing file /Users/hugohonda/Developer/bcb-data-scraper/rethinkdb_data/a675bcca-385e-482e-9832-9e36500f9cbc
+2018-04-01T11:26:38.931915000 916.520693s info: Table a675bcca-385e-482e-9832-9e36500f9cbc: Deleted the table.
+2018-04-01T11:26:42.726788000 920.315564s info: Table cb559a3f-1842-4fee-9087-10860c8bc4f7: Starting a new Raft election for term 1.
+2018-04-01T11:26:42.726949000 920.315724s info: Table cb559a3f-1842-4fee-9087-10860c8bc4f7: Added replica on this server.
+2018-04-01T11:26:42.740514000 920.329290s info: Table cb559a3f-1842-4fee-9087-10860c8bc4f7: This server is Raft leader for term 1. Latest log index is 0.
+2018-04-01T11:29:04.712606000 1062.316875s notice: Removing file /Users/hugohonda/Developer/bcb-data-scraper/rethinkdb_data/cb559a3f-1842-4fee-9087-10860c8bc4f7
+2018-04-01T11:29:04.712617000 1062.316886s info: Table cb559a3f-1842-4fee-9087-10860c8bc4f7: Deleted the table.
+2018-04-01T11:29:12.517802000 1070.122137s info: Table 2fadefe5-0fc1-4827-a764-00b2c511a74e: Starting a new Raft election for term 1.
+2018-04-01T11:29:12.517972000 1070.122306s info: Table 2fadefe5-0fc1-4827-a764-00b2c511a74e: Added replica on this server.
+2018-04-01T11:29:12.531349000 1070.135684s info: Table 2fadefe5-0fc1-4827-a764-00b2c511a74e: This server is Raft leader for term 1. Latest log index is 0.
+2018-04-01T11:31:59.079178000 1236.684495s notice: Server got SIGINT from pid 73407, uid 501; shutting down...
+2018-04-01T11:31:59.079375000 1236.684692s notice: Shutting down client connections...
+2018-04-01T11:31:59.079560000 1236.684877s notice: All client connections closed.
+2018-04-01T11:31:59.079569000 1236.684886s notice: Shutting down storage engine... (This may take a while if you had a lot of unflushed data in the writeback cache.)
+2018-04-01T11:31:59.100188000 1236.705506s notice: Storage engine shut down.
+2018-04-01T12:15:58.973497000 0.202354s notice: Running rethinkdb 2.3.6 (CLANG 9.0.0 (clang-900.0.37))...
+2018-04-01T12:15:58.980500000 0.209348s notice: Running on Darwin 17.4.0 x86_64
+2018-04-01T12:15:58.980579000 0.209426s notice: Loading data from directory /Users/hugohonda/Developer/bcb-data-scraper/rethinkdb_data
+2018-04-01T12:15:59.005935000 0.234782s info: Automatically using cache size of 386 MB
+2018-04-01T12:15:59.007844000 0.236691s notice: Listening for intracluster connections on port 29015
+2018-04-01T12:15:59.031726000 0.260573s notice: Listening for client driver connections on port 28015
+2018-04-01T12:15:59.031895000 0.260742s notice: Listening for administrative HTTP connections on port 8080
+2018-04-01T12:15:59.031901000 0.260747s notice: Listening on cluster addresses: 127.0.0.1, ::1
+2018-04-01T12:15:59.031902000 0.260749s notice: Listening on driver addresses: 127.0.0.1, ::1
+2018-04-01T12:15:59.031903000 0.260750s notice: Listening on http addresses: 127.0.0.1, ::1
+2018-04-01T12:15:59.032009000 0.260856s notice: To fully expose RethinkDB on the network, bind to all addresses by running rethinkdb with the `--bind all` command line option.
+2018-04-01T12:15:59.032012000 0.260858s notice: Server ready, "HugoHonda_local_o33" e6765282-d535-44fb-9f63-c7310e3224f9
+2018-04-01T12:16:00.557678000 1.786530s info: Table 2fadefe5-0fc1-4827-a764-00b2c511a74e: Starting a new Raft election for term 2.
+2018-04-01T12:16:00.574660000 1.803512s info: Table 2fadefe5-0fc1-4827-a764-00b2c511a74e: This server is Raft leader for term 2. Latest log index is 4.
+2018-04-01T12:16:09.400977000 10.629856s notice: Removing file /Users/hugohonda/Developer/bcb-data-scraper/rethinkdb_data/2fadefe5-0fc1-4827-a764-00b2c511a74e
+2018-04-01T12:16:09.400988000 10.629868s info: Table 2fadefe5-0fc1-4827-a764-00b2c511a74e: Deleted the table.
+2018-04-01T12:16:13.790312000 15.019206s info: Table d58630cd-e924-4c9c-a89e-b922ceb7c783: Starting a new Raft election for term 1.
+2018-04-01T12:16:13.790480000 15.019373s info: Table d58630cd-e924-4c9c-a89e-b922ceb7c783: Added replica on this server.
+2018-04-01T12:16:13.802617000 15.031511s info: Table d58630cd-e924-4c9c-a89e-b922ceb7c783: This server is Raft leader for term 1. Latest log index is 0.
+2018-04-01T12:28:02.677821000 723.919298s notice: Removing file /Users/hugohonda/Developer/bcb-data-scraper/rethinkdb_data/d58630cd-e924-4c9c-a89e-b922ceb7c783
+2018-04-01T12:28:02.677840000 723.919316s info: Table d58630cd-e924-4c9c-a89e-b922ceb7c783: Deleted the table.
+2018-04-01T12:28:17.533967000 738.775498s info: Table e7d88de4-e0fa-4089-94c8-a5a230ac29f4: Starting a new Raft election for term 1.
+2018-04-01T12:28:17.534123000 738.775653s info: Table e7d88de4-e0fa-4089-94c8-a5a230ac29f4: Added replica on this server.
+2018-04-01T12:28:17.544515000 738.786046s info: Table e7d88de4-e0fa-4089-94c8-a5a230ac29f4: This server is Raft leader for term 1. Latest log index is 0.
+2018-04-01T12:31:56.533684000 957.776016s notice: Removing file /Users/hugohonda/Developer/bcb-data-scraper/rethinkdb_data/e7d88de4-e0fa-4089-94c8-a5a230ac29f4
+2018-04-01T12:31:56.533711000 957.776042s info: Table e7d88de4-e0fa-4089-94c8-a5a230ac29f4: Deleted the table.
+2018-04-01T12:32:02.656479000 963.898833s info: Table eb4a2ce8-09b2-4309-84cc-9ec0c81b5229: Starting a new Raft election for term 1.
+2018-04-01T12:32:02.656640000 963.898993s info: Table eb4a2ce8-09b2-4309-84cc-9ec0c81b5229: Added replica on this server.
+2018-04-01T12:32:02.668702000 963.911057s info: Table eb4a2ce8-09b2-4309-84cc-9ec0c81b5229: This server is Raft leader for term 1. Latest log index is 0.
+2018-04-01T12:37:39.649257000 1300.892844s notice: Removing file /Users/hugohonda/Developer/bcb-data-scraper/rethinkdb_data/eb4a2ce8-09b2-4309-84cc-9ec0c81b5229
+2018-04-01T12:37:39.649272000 1300.892858s info: Table eb4a2ce8-09b2-4309-84cc-9ec0c81b5229: Deleted the table.
+2018-04-01T12:37:46.663918000 1307.906848s info: Table 3d651128-fe69-4b1b-8da4-2eaf3eef9163: Starting a new Raft election for term 1.
+2018-04-01T12:37:46.664155000 1307.907085s info: Table 3d651128-fe69-4b1b-8da4-2eaf3eef9163: Added replica on this server.
+2018-04-01T12:37:46.672016000 1307.914944s info: Table 3d651128-fe69-4b1b-8da4-2eaf3eef9163: This server is Raft leader for term 1. Latest log index is 0.
+2018-04-01T12:39:52.112053000 1433.352255s notice: Removing file /Users/hugohonda/Developer/bcb-data-scraper/rethinkdb_data/3d651128-fe69-4b1b-8da4-2eaf3eef9163
+2018-04-01T12:39:52.112065000 1433.352266s info: Table 3d651128-fe69-4b1b-8da4-2eaf3eef9163: Deleted the table.
+2018-04-01T12:39:55.405998000 1436.646209s info: Table c4d21947-85b1-483a-b00d-96097e1ed275: Starting a new Raft election for term 1.
+2018-04-01T12:39:55.406245000 1436.646457s info: Table c4d21947-85b1-483a-b00d-96097e1ed275: Added replica on this server.
+2018-04-01T12:39:55.413545000 1436.653757s info: Table c4d21947-85b1-483a-b00d-96097e1ed275: This server is Raft leader for term 1. Latest log index is 0.
+2018-04-01T12:42:39.112778000 1600.353488s notice: Removing file /Users/hugohonda/Developer/bcb-data-scraper/rethinkdb_data/c4d21947-85b1-483a-b00d-96097e1ed275
+2018-04-01T12:42:39.112791000 1600.353500s info: Table c4d21947-85b1-483a-b00d-96097e1ed275: Deleted the table.
+2018-04-01T12:42:45.680664000 1606.921393s info: Table 7e7bc84d-57bf-4ca7-b0e3-56d340d0244e: Starting a new Raft election for term 1.
+2018-04-01T12:42:45.680816000 1606.921544s info: Table 7e7bc84d-57bf-4ca7-b0e3-56d340d0244e: Added replica on this server.
+2018-04-01T12:42:45.688314000 1606.929043s info: Table 7e7bc84d-57bf-4ca7-b0e3-56d340d0244e: This server is Raft leader for term 1. Latest log index is 0.
+2018-04-01T12:46:46.286942000 1847.528403s notice: Removing file /Users/hugohonda/Developer/bcb-data-scraper/rethinkdb_data/7e7bc84d-57bf-4ca7-b0e3-56d340d0244e
+2018-04-01T12:46:46.286955000 1847.528415s info: Table 7e7bc84d-57bf-4ca7-b0e3-56d340d0244e: Deleted the table.
+2018-04-01T12:46:53.274211000 1854.515693s info: Table e2ace699-31e4-43d9-858d-f81d0c6a7e37: Starting a new Raft election for term 1.
+2018-04-01T12:46:53.274511000 1854.515993s info: Table e2ace699-31e4-43d9-858d-f81d0c6a7e37: Added replica on this server.
+2018-04-01T12:46:53.281220000 1854.522702s info: Table e2ace699-31e4-43d9-858d-f81d0c6a7e37: This server is Raft leader for term 1. Latest log index is 0.
+2018-04-01T12:50:57.610813000 2098.853039s notice: Removing file /Users/hugohonda/Developer/bcb-data-scraper/rethinkdb_data/e2ace699-31e4-43d9-858d-f81d0c6a7e37
+2018-04-01T12:50:57.610824000 2098.853049s info: Table e2ace699-31e4-43d9-858d-f81d0c6a7e37: Deleted the table.
+2018-04-01T12:51:01.302442000 2102.544678s info: Table 907ce0f3-83e6-40a4-8373-3ae1a0b6fda3: Starting a new Raft election for term 1.
+2018-04-01T12:51:01.302681000 2102.544918s info: Table 907ce0f3-83e6-40a4-8373-3ae1a0b6fda3: Added replica on this server.
+2018-04-01T12:51:01.309240000 2102.551477s info: Table 907ce0f3-83e6-40a4-8373-3ae1a0b6fda3: This server is Raft leader for term 1. Latest log index is 0.
+2018-04-01T12:52:38.240550000 2199.483082s notice: Removing file /Users/hugohonda/Developer/bcb-data-scraper/rethinkdb_data/907ce0f3-83e6-40a4-8373-3ae1a0b6fda3
+2018-04-01T12:52:38.240564000 2199.483095s info: Table 907ce0f3-83e6-40a4-8373-3ae1a0b6fda3: Deleted the table.
+2018-04-01T12:52:42.646684000 2203.889228s info: Table f5c1a7b4-9bd7-4a6a-b74d-3bb1c1a59712: Starting a new Raft election for term 1.
+2018-04-01T12:52:42.646934000 2203.889478s info: Table f5c1a7b4-9bd7-4a6a-b74d-3bb1c1a59712: Added replica on this server.
+2018-04-01T12:52:42.659325000 2203.901870s info: Table f5c1a7b4-9bd7-4a6a-b74d-3bb1c1a59712: This server is Raft leader for term 1. Latest log index is 0.
