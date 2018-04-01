@@ -1,28 +1,10 @@
 import os
 import json
 import re
-from pprint import pprint
-from nltk.tokenize import TreebankWordTokenizer
-from nltk.corpus import stopwords
-from nltk.stem.rslp import RSLPStemmer
 import unicodedata
+from pprint import pprint
 
 data = json.load(open('../output/1998-2018-copom-records.json'))
-
-# tokenizer
-sws = stopwords.words('portuguese')
-stemmer = RSLPStemmer()
-spacer_re = re.compile(r'\t+|\s+|\s+\s|["\'\n\.,:]+')
-par_re = r'(\(|\[|\]|\))'
-
-def tokenize (text):
-    text = re.sub(r'TAG_CONTEUDO_FIM|/conteudo', '', text)
-    text = unicodedata.normalize('NFD', text)
-    text = text.encode('ascii', 'ignore').decode('utf-8')
-    text = re.sub(par_re, r' \1 ', text)
-    tokens = re.split(spacer_re, text)
-    tokens = [stemmer.stem(w) for w in tokens if len(w) >= 2 and w.lower() not in sws]
-    return tokens
 
 # participants extractor < 200
 all_pattern = r'(?:[Pp]articipante|[Pp]resente)s?\s?:?\s*?[Mm]embros.*\s*([\s\S]*?)\s*?[Cc]hefes?'
@@ -96,7 +78,7 @@ def get_topics (text, copom_id):
       content_pattern = re.compile(f'{curr_topic}[\s\S]+?{curr_topic}([\s\S]+?){next_topic}')
     else:
       content_pattern = re.compile(f'{curr_topic}[\s\S]+?{curr_topic}([\s\S]+?)Atendimento: 145')
-    if content_pattern != None:
+    if content_pattern:
       try:
         result = re.search(content_pattern, text).group(1)
         curr_topic = unicodedata.normalize('NFD', curr_topic).lower()
@@ -110,9 +92,8 @@ def get_topics (text, copom_id):
       except Exception as err:
         print('error message: ', err)
         pass
-      if curr_topic != '':
-        all_topics.add(curr_topic)
-        topics.append(topic)
+      all_topics.add(curr_topic)
+      topics.append(topic)
   return topics
 
 # topics extractor >= 200
@@ -153,7 +134,7 @@ def get_topics_200 (text, copom_id):
     topics.append(topic)
   return topics
 
-# execution
+# preprocess
 
 initial = 1998
 final = 2018
@@ -193,5 +174,5 @@ if not os.path.isdir(output_dir):
 with open(f'{output_dir}/{initial}-{final}-copom-records.json', 'w') as file:
   json.dump(data, file)
 
-# with open(f'full-text.txt', 'w') as file:
-#   file.write(full_text)
+with open(f'{output_dir}/{initial}-{final}-full-compom-records.txt', 'w') as file:
+  file.write(full_text)
