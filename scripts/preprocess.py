@@ -39,10 +39,22 @@ def get_participants_200 (text):
   }
   return participants
 
+# normalize
+par_re = r'([\{(\(\[\|\]\))\}\!\"\'\#\*\+\/\:\;\<\=\>\?\@\^\_\`\\])'
+punkt_re = r'(.)[\,]\s'
+
+def normalize_text (text):
+  text = re.sub(r'TAG_CONTEUDO_FIM|/conteudo', '', text)
+  text = unicodedata.normalize('NFD', text)
+  text = text.encode('ascii', 'ignore').decode('utf-8')
+  text = re.sub(punkt_re, r'\1 ', text)
+  text = re.sub(par_re, '', text)
+  text = re.sub(r'\s+', ' ', text)
+  return text
+
 # topics extractor 90 < x < 200
 summary_pattern = r'[Ss]um.rio\s+([\s\S]*?)\s+[Dd]ata:?'
 all_topics = set()
-
 def get_topics (text, copom_id):
   text = re.sub(r'A\s*?valia..o\s+?[Pp]rospectiva\s+?[Dd]as\s+?[Tt]end.ncias\s+?d.\s+?[Ii]nfla..o', 'Avaliacao prospectiva das tendencias de inflacao', text)
   text = re.sub(r'A\s*?mbiente\s+[Ee]xterno', 'Ambiente externo', text)
@@ -86,7 +98,7 @@ def get_topics (text, copom_id):
         curr_topic = re.sub(r'\s+', ' ', curr_topic).capitalize()
         topic = {
           'title': curr_topic,
-          'content': result,
+          'content': normalize_text(result),
           'copom_id': copom_id
         }
       except Exception as err:
@@ -124,7 +136,7 @@ def get_topics_200 (text, copom_id):
         curr_topic = re.sub(r'\s+', ' ', curr_topic).capitalize()
         topic = {
           'title': curr_topic,
-          'content': result,
+          'content': normalize_text(result),
           'copom_id': copom_id
         }
         all_topics.add(curr_topic)
@@ -135,7 +147,6 @@ def get_topics_200 (text, copom_id):
   return topics
 
 # preprocess
-
 initial = 1998
 final = 2018
 output_dir = '../output'
@@ -165,9 +176,9 @@ for record in data:
     err_participants.append(record['id'])
     pass
 
-print(err_topics)
-print(err_participants)
-print(sorted(all_topics))
+# print(err_topics)
+# print(err_participants)
+# print(sorted(all_topics))
 
 if not os.path.isdir(output_dir):
   os.mkdir(output_dir)
