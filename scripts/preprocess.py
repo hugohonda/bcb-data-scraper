@@ -24,26 +24,42 @@ def tokenize (text):
     tokens = [stemmer.stem(w) for w in tokens if len(w) >= 2 and w.lower() not in sws]
     return tokens
 
-# participants extractor
-all_pattern = r'(?:[Pp]articipante|[Pp]resente)s?:?\s*?[Mm]embros.*\s*([\s\S]*?)\s*?[Cc]hefes?\s[Dd]e\s[Dd]epartamento:?'
+# participants extractor < 200
+all_pattern = r'(?:[Pp]articipante|[Pp]resente)s?\s?:?\s*?[Mm]embros.*\s*([\s\S]*?)\s*?[Cc]hefes?'
 president_pattern = r'(.*?)[\s\W]*?[Pp]residente.*\n'
 presents_pattern = r'[Pp]residente[\s\W]*([\s\S]*)'
 
 def get_participants (text):
   all = re.search(all_pattern, text).group(1)
-  president = re.search(president_pattern, all).group(1)
+  president = re.search(president_pattern, all).group(1).strip()
   presents = re.search(presents_pattern, all).group(1)
-  presents = re.sub(r'\r', ' ', presents)
-  presents = re.sub(r'\s{2,}', '@', presents)
+  presents = re.sub('\r', '', presents)
+  presents = re.sub(r'\n+', r'\n', presents)
+  presents = presents.split(' \n ')
+  presents = [x.replace('\n',' ').strip() for x in presents]
   participants = {
     'president': president,
-    'others': presents.split('@')
+    'others': presents
   }
   return participants
 
-# topics extractor
+# participants extractor >= 200
+def get_participants_200 (text):
+  all = re.search(all_pattern, text).group(1)
+  president = re.search(president_pattern, all).group(1).strip()
+  presents = re.search(presents_pattern, all).group(1)
+  presents = re.sub(r'\n([A-Z])', r'\1', presents)
+  presents = presents.split('\n')
+  presents = [x.strip() for x in presents]
+  participants = {
+    'president': president,
+    'others': presents
+  }
+  return participants
+
+# topics extractor < 200
 summary_pattern = r'[Ss]um.rio\s+([\s\S]*?)\s+[Dd]ata:?'
-all_topics = set([])
+all_topics = set()
 
 def get_topics (text):
   text = re.sub(r'A\s*?valiação\s+?prospectiva\s+?das\s+?tendências\s+?d.\s+?inflação', 'Avaliação prospectiva das tendências de inflação', text, flags=re.I)
@@ -87,21 +103,55 @@ def get_topics (text):
         curr_topic = unicodedata.normalize('NFD', curr_topic).lower()
         curr_topic = curr_topic.encode('ascii', 'ignore').decode('utf-8')
         curr_topic = re.sub(r'\s+', ' ', curr_topic).capitalize()
-        all_topics.add(curr_topic)
         topic = {
           'title': curr_topic,
-          'content': result
+          'content': tokenize(result)
         }
+        all_topics.add(curr_topic)
       except Exception as err:
-        print('-----------------------')
-        print('topic: ', curr_topic)
-        if idx < (l - 1):
-          print(next_topic)
         print('error message: ', err)
         pass
     topics.append(topic)
-  # pprint(topics)
   return topics
+
+# topics extractor >= 200
+
+def get_topics_200 (text):
+  summary = re.findall(r'\s+[A-Z]\)\s+?([\s\S]*?)\s+?\d+\.', text, flags=re.M)
+  l = len(summary)
+  topics = []
+  for idx, curr_topic in enumerate(summary):
+    curr_topic = curr_topic.rstrip().split('\n')
+    curr_topic = '\s+'.join(curr_topic)
+    topic = {}
+    content_pattern = None
+    if idx < (l - 1):
+      next_topic = summary[idx + 1]
+      next_topic = next_topic.rstrip().split('\n')
+      next_topic = '\s+'.join(next_topic)
+      content_pattern = re.compile(f'{curr_topic}\s+([\s\S]*?)\s+{next_topic}')
+    else:
+      content_pattern = re.compile(f'{curr_topic}\s+([\s\S]*)')
+    if content_pattern != None:
+      try:
+        result = re.search(content_pattern, text).group(1)
+        curr_topic = unicodedata.normalize('NFD', curr_topic).lower()
+        curr_topic = curr_topic.encode('ascii', 'ignore').decode('utf-8')
+        curr_topic = re.sub('\n', ' ', curr_topic)
+        curr_topic = re.sub('\\\\s\+', '', curr_topic)
+        curr_topic = re.sub(r'\s+', ' ', curr_topic).capitalize()
+        topic = {
+          'title': curr_topic,
+          'content': tokenize(result)
+        }
+        all_topics.add(curr_topic)
+      except Exception as err:
+        print('error message: ', err)
+        pass
+    topics.append(topic)
+  return topics
+
+# execution
 
 initial = 1998
 final = 2018
@@ -111,18 +161,22 @@ err_participants = []
 err_topics = []
 
 for content in data:
-  if content['count'] > 199:
-    break
   print(content['count'])
   text = content['content']['raw']
   full_text = full_text + text
   try:
-    content['topics'] = get_topics(text)
+    if content['count'] < 200:
+      content['topics'] = get_topics(text)
+    else:
+      content['topics'] = get_topics_200(text)
   except Exception:
     err_topics.append(content['count'])
     pass
   try:
-    content['participants'] = get_participants(text)
+    if content['count'] < 200:
+      content['participants'] = get_participants(text)
+    else:
+      content['participants'] = get_participants_200(text)
   except Exception:
     err_participants.append(content['count'])
     pass
@@ -131,17 +185,10 @@ print(err_topics)
 print(err_participants)
 print(sorted(all_topics))
 
-# if not os.path.isdir(output_dir):
-#   os.mkdir(output_dir)
-# with open(f'{output_dir}/{initial}-{final}-copom-records.json', 'w') as file:
-#   json.dump(data, file)
+if not os.path.isdir(output_dir):
+  os.mkdir(output_dir)
+with open(f'{output_dir}/{initial}-{final}-copom-records.json', 'w') as file:
+  json.dump(data, file)
 
 # with open(f'full-text.txt', 'w') as file:
 #   file.write(full_text)
-
-# for content in data:
-#   if content['count'] == 96:
-#     text = content['content']['raw']
-#     # print(text)
-#     # print(get_participants(text))
-#     print(get_topics(text))
