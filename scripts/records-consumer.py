@@ -6,6 +6,7 @@ from bs4 import BeautifulSoup
 from bs4 import Comment
 from io import BytesIO
 from PyPDF2 import PdfFileReader
+import rethinkdb as r
 
 month_dict = {'Janeiro': 1, 'Fevereiro': 2, 'Março': 3, 'Abril': 4, 'Maio': 5, 'Junho': 6, 'Julho': 7, 'Agosto': 8, 'Setembro': 9, 'Outubro': 10, 'Novembro': 11, 'Dezembro': 12}
 
