@@ -12,6 +12,7 @@ sources = [
   { 'name': 'InfoMoney', 'link': 'http://www.infomoney.com.br/ultimas-noticias/rss' },
   { 'name': 'Correio Braziliense', 'link': 'http://www.correiobraziliense.com.br/rss/noticia/economia/rss.xml' },
   { 'name': 'Jornal do Comércio RS', 'link': 'http://jcrs.uol.com.br/_conteudo/economia/rss.xml' }
+  # { 'name': 'Banco Central', 'link': 'http://www.bcb.gov.br/api/feed/pt-br/NOTICIAS' }
 ]
 
 
@@ -26,8 +27,8 @@ def feeds_to_object (sources):
             obj['title'] = entry.title
           if entry.link:
             obj['link'] = entry.link
-          if entry.published:
-            obj['pub-date'] = entry.published
+          if entry.published or entry.updated:
+            obj['pub-date'] = entry.published or entry.updated
           if entry.summary_detail.value:
             obj['summary'] = entry.summary_detail.value
           obj_entries.append(obj)

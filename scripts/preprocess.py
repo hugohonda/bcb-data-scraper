@@ -49,8 +49,26 @@ def normalize_text (text):
   text = text.encode('ascii', 'ignore').decode('utf-8')
   text = re.sub(punkt_re, r'\1 ', text)
   text = re.sub(par_re, '', text)
-  text = re.sub(r'\s+', ' ', text)
-  return text
+  normalized = re.sub(r'\s+', ' ', text)
+  return normalized
+
+def normalize_topic (topic):
+  normalized = topic
+  if re.search(r'[Ee]xterno|[Mm]ercado de cambio', normalized):
+    normalized = 'Externo / Cambio'
+  if re.search(r'[Ii]nflacao', normalized):
+    normalized = 'Inflacao'
+  if re.search(r'[Ee]conomica', normalized):
+    normalized = 'Atividade Economica'
+  if re.search(r'[Cc]redito', normalized):
+    normalized = 'Credito'
+  if re.search(r'[Ee]xpectativa', normalized):
+    normalized = 'Expectativas e sondagens'
+  if re.search(r'Nota explicativa', normalized):
+    normalized = 'Nota explicativa'
+  if re.search(r'[Mm]onetaria', normalized):
+    normalized = 'Politica monetaria'
+  return normalized
 
 # topics extractor 90 < x < 200
 summary_pattern = r'[Ss]um.rio\s+([\s\S]*?)\s+[Dd]ata:?'
@@ -97,7 +115,7 @@ def get_topics (text, copom_id):
         curr_topic = curr_topic.encode('ascii', 'ignore').decode('utf-8')
         curr_topic = re.sub(r'\s+', ' ', curr_topic).capitalize()
         topic = {
-          'title': curr_topic,
+          'title': normalize_topic(curr_topic),
           'content': normalize_text(result),
           'copom_id': copom_id
         }
@@ -109,7 +127,6 @@ def get_topics (text, copom_id):
   return topics
 
 # topics extractor >= 200
-
 def get_topics_200 (text, copom_id):
   summary = re.findall(r'\s+[A-Z]\)\s+?([\s\S]*?)\s+?\d+\.', text, flags=re.M)
   l = len(summary)
@@ -126,7 +143,7 @@ def get_topics_200 (text, copom_id):
       content_pattern = re.compile(f'{curr_topic}\s+([\s\S]*?)\s+{next_topic}')
     else:
       content_pattern = re.compile(f'{curr_topic}\s+([\s\S]*)')
-    if content_pattern != None:
+    if content_pattern:
       try:
         result = re.search(content_pattern, text).group(1)
         curr_topic = unicodedata.normalize('NFD', curr_topic).lower()
@@ -135,14 +152,14 @@ def get_topics_200 (text, copom_id):
         curr_topic = re.sub('\\\\s\+', '', curr_topic)
         curr_topic = re.sub(r'\s+', ' ', curr_topic).capitalize()
         topic = {
-          'title': curr_topic,
+          'title': normalize_topic(curr_topic),
           'content': normalize_text(result),
           'copom_id': copom_id
         }
-        all_topics.add(curr_topic)
       except Exception as err:
         print('error message: ', err)
         pass
+    all_topics.add(curr_topic)
     topics.append(topic)
   return topics
 
